@@ -135,7 +135,7 @@ $ sudo systemctl start docker
 ```
 ## 2.5 验证成功安装
  - 为了验证是否成功安装，运行一下hello world镜像
- 
+ ![](images/5.png)
  ```
 $ sudo docker run hello-world
 ```
