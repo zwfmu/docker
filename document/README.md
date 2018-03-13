@@ -5,7 +5,7 @@ Docker是一个开源项目，是一个能够把开发的应用程序自动部�
 
 ### 1.2 Docker与传统虚拟化方式的区别
 看图：
-![](images/1.png)
+![](/images/1.png)
 
 比如同时运行在一台linux服务器上
 - Docker与其他容器分享系统内核,内存消耗低，轻量级
@@ -46,8 +46,8 @@ Docker包括三个基本概念
 
 ### 1.5 Docker版本与区别
 自从1.13版后Docker 分两种版本  Community Edition (CE) 和 Enterprise Edition (EE)
-![](images/3.png)
-![](images/4.png)
+![](/images/3.png)
+![](/images/4.png)
 
 Docker CE 有两种更新渠道 `Stable` 和 `Edge`
 - Stable gives you reliable updates every quarter,Stable每个季度更新一次
@@ -139,7 +139,7 @@ $ sudo systemctl start docker
  ```
 $ sudo docker run hello-world
 ```
- ![](images/5.png)
+ ![](/images/5.png)
  
  
 ## 2.6 卸载Docker CE
