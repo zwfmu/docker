@@ -19,3 +19,6 @@
 **/tmp
 **/.tmp
 **/bin/**
+
+/mvnw
+/mvnw.cmd
