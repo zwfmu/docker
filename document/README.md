@@ -139,7 +139,7 @@ $ sudo systemctl start docker
  ```
 $ sudo docker run hello-world
 ```
-## 2.4 卸载Docker CE
+## 2.6 卸载Docker CE
 
 ```
 $ sudo yum remove docker-ce
