@@ -91,48 +91,57 @@ $ sudo yum remove docker \
 
 #### 2.2.1 软件仓库安装
 - 1.安装依赖包
+
 ```
 $ sudo yum install -y yum-utils \
   device-mapper-persistent-data \
   lvm2
 ```
 - 2.1 安装仓库（stable更新模式,每季度更新一次）
+
 ```
 $ sudo yum-config-manager \
     --add-repo \
     https://download.docker.com/linux/centos/docker-ce.repo
 ```
 - 2.2 可选择的，启用edge和test（每月更新一次），他们包含在`docker.repo`中
+
 ```
 $ sudo yum-config-manager --enable docker-ce-edge
 $ sudo yum-config-manager --enable docker-ce-test
 ```
 禁用
+
 ```
 $ sudo yum-config-manager --disable docker-ce-edge
 ```
 
 ## 2.3 安装 卸载Docker CE
 - 安装最新版本
+
 ```
 $ sudo yum install docker-ce
 ```
 - 安装指定版本
+
 ```
 $ yum list docker-ce --showduplicates | sort -r
 $ sudo yum install <FULLY-QUALIFIED-PACKAGE-NAME>
 ```
 ## 2.4 启动 Docker 
+
 ```
 $ sudo systemctl start docker
 ```
- ## 2.5 验证成功安装
+## 2.5 验证成功安装
  - 为了验证是否成功安装，运行一下hello world镜像
+ 
  ```
 $ sudo docker run hello-world
 ```
 ## 2.4 卸载Docker CE
-```$xslt
+
+```
 $ sudo yum remove docker-ce
 $ sudo rm -rf /var/lib/docker
 ```
