@@ -27,6 +27,7 @@ Docker包括三个基本概念
 - 镜像 Image
 - 容器 Container
 - 仓库 Repository
+
 #### 1.4.1 镜像 Image
 - Docker 镜像就是一个只读的模板，例如：一个镜像包含了一个完成的centerOS操作系统环境，里面仅安装了jdk
 - 镜像可以用来创建Docker容器
@@ -44,14 +45,94 @@ Docker包括三个基本概念
 - 用户在本地网络创建一个私有仓库
 
 ### 1.5 Docker版本与区别
-Docker 分两种版本  Community Edition (CE) 和 Enterprise Edition (EE)
+自从1.13版后Docker 分两种版本  Community Edition (CE) 和 Enterprise Edition (EE)
 ![](images/3.png)
 ![](images/4.png)
 
-## Docker 的安装
- Docker CE for CentOS，[官方参考](https://docs.docker.com/install/linux/docker-ce/centos/)
- 
-     To install Docker CE, you need a maintained version of CentOS 7. Archived versions aren’t supported or tested.
-     The centos-extras repository must be enabled. This repository is enabled by default, but if you have disabled it, you need to re-enable it.
+Docker CE 有两种更新渠道 `Stable` 和 `Edge`
+- Stable gives you reliable updates every quarter,Stable每个季度更新一次
+- Edge gives you new features every month,Edge每个月更新一次
 
-  
+## 2. Docker 的安装
+### 2.1 准备
+ Docker CE for CentOS，[官方参考](https://docs.docker.com/install/linux/docker-ce/centos/)
+ ```
+To install Docker CE, you need a maintained version of CentOS 7. Archived versions aren’t supported or tested.
+The centos-extras repository must be enabled. This repository is enabled by default, but if you have disabled it, you need to re-enable it.
+The overlay2 storage driver is recommended.
+```
+- Docker CE 需要CentOS 7
+- 必须启用centos-extras 软件源
+- 建议使用overlay2文件驱动
+
+### 2.1 卸载老版本 Uninstall old versions
+```
+Older versions of Docker were called docker or docker-engine. If these are installed, uninstall them, along with associated dependencies.
+```
+卸载：
+```
+$ sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-selinux \
+                  docker-engine-selinux \
+                  docker-engine
+```
+- 文件夹 `/var/lib/docker/`中包括： images, containers, volumes,  networks
+
+### 2.2 安装方式
+- 软件仓库安装
+- RPM包安装,文档略,[参考官方文档](https://docs.docker.com/install/linux/docker-ce/centos/#install-from-a-package) 
+- 自动化脚本安装,文档略,[参考官方文档](https://docs.docker.com/install/linux/docker-ce/centos/#install-using-the-convenience-script) 
+
+#### 2.2.1 软件仓库安装
+- 1.安装依赖包
+```
+$ sudo yum install -y yum-utils \
+  device-mapper-persistent-data \
+  lvm2
+```
+- 2.1 安装仓库（stable更新模式,每季度更新一次）
+```
+$ sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+```
+- 2.2 可选择的，启用edge和test（每月更新一次），他们包含在`docker.repo`中
+```
+$ sudo yum-config-manager --enable docker-ce-edge
+$ sudo yum-config-manager --enable docker-ce-test
+```
+禁用
+```
+$ sudo yum-config-manager --disable docker-ce-edge
+```
+
+## 2.3 安装 卸载Docker CE
+- 安装最新版本
+```
+$ sudo yum install docker-ce
+```
+- 安装指定版本
+```
+$ yum list docker-ce --showduplicates | sort -r
+$ sudo yum install <FULLY-QUALIFIED-PACKAGE-NAME>
+```
+## 2.4 启动 Docker 
+```
+$ sudo systemctl start docker
+```
+ ## 2.5 验证成功安装
+ - 为了验证是否成功安装，运行一下hello world镜像
+ ```
+$ sudo docker run hello-world
+```
+## 2.4 卸载Docker CE
+```$xslt
+$ sudo yum remove docker-ce
+$ sudo rm -rf /var/lib/docker
+```
