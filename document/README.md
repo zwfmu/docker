@@ -91,44 +91,51 @@ $ sudo yum remove docker \
 
 #### 2.2.1 软件仓库安装
 - 1.安装依赖包
+
 ```
 $ sudo yum install -y yum-utils \
   device-mapper-persistent-data \
   lvm2
 ```
 - 2.1 安装仓库（stable更新模式,每季度更新一次）
+
 ```
 $ sudo yum-config-manager \
     --add-repo \
     https://download.docker.com/linux/centos/docker-ce.repo
 ```
 - 2.2 可选择的，启用edge和test（每月更新一次），他们包含在`docker.repo`中
+
 ```
 $ sudo yum-config-manager --enable docker-ce-edge
 $ sudo yum-config-manager --enable docker-ce-test
 ```
 禁用
+
 ```
 $ sudo yum-config-manager --disable docker-ce-edge
 ```
 
 ### 2.3 安装 卸载Docker CE
 - 安装最新版本
+
 ```
 $ sudo yum install docker-ce
 ```
-
 - 安装指定版本
+
 ```
 $ yum list docker-ce --showduplicates | sort -r
 $ sudo yum install <FULLY-QUALIFIED-PACKAGE-NAME>
 ```
 ### 2.4 启动 Docker 
+
 ```
 $ sudo systemctl start docker
 ```
 ### 2.5 验证成功安装
  - 为了验证是否成功安装，运行一下hello world镜像
+
  ```
 $ sudo docker run hello-world
 ```
@@ -136,6 +143,7 @@ $ sudo docker run hello-world
  
  
 ### 2.6 卸载Docker CE
+
 ```
 $ sudo yum remove docker-ce
 $ sudo rm -rf /var/lib/docker
@@ -144,6 +152,7 @@ $ sudo rm -rf /var/lib/docker
 ## 3. Docker 镜像
 ### 3.1 从仓库获取镜像
 - 从Docker hub下载一个ubuntu:12.04镜像
+
 ```
 $ docker pull ubuntu:12.04
 ```
@@ -155,11 +164,13 @@ $ docker pull registry.hub.docker.com/ubuntu:12.04
 
 ### 3.2 管理本地主机上的镜像
 - 列出本地所有镜像
+
 ```
 $ docker images
 ```
 
 - 创建镜像：基于现有镜像进行改动后,执行commit命令，创建了一个IMAGE:mymysql,tag:v1的镜像
+        
 ```
 $ docker commit -a "xiaofeng" -m "my commit" a404c6c174a2  mymysql:v1 
 
@@ -172,6 +183,7 @@ $ docker commit -a "xiaofeng" -m "my commit" a404c6c174a2  mymysql:v1
     -p :在commit时，将容器暂停
  
 - 删除镜像
+ 
 ```
 $ docker rmi image-id
 ```
@@ -190,27 +202,32 @@ $ docker import  my_ubuntu_v3.tar runoob/ubuntu:v4
 ### 4.1 启动容器
 #### 4.1.1 新建并启动
 使用docker镜像nginx:latest以后台模式启动一个容器,并将容器命名为mynginx。
+
 ```
 $ docker run --name mynginx -d nginx:latest
 
 ```
 
 使用镜像nginx:latest以后台模式启动一个容器,并将容器的80端口映射到主机随机端口。
+
 ```
 $ docker run -P -d nginx:latest
 ```
 
 使用镜像nginx:latest以后台模式启动一个容器,将容器的80端口映射到主机的80端口,主机的目录/data映射到容器的/data。
+
 ```
 $ docker run -p 80:80 -v /data:/data -d nginx:latest
 ```
 
 #### 4.1.2 启动已终止的容器
+
 ```
 $ docker start container-name
 ```
 
 ### 4.2 进入容器
+
 ```
 $ docker exec -i -t  mynginx /bin/bash
 ```
@@ -219,6 +236,7 @@ $ docker exec -i -t  mynginx /bin/bash
 #### 4.3.1 导出容器
 
 将文件系统作为一个tar归档文件导出到STDOUT。
+
 ```
 $ docker export -o my_ubuntu_v3.tar a404c6c174a2
 
