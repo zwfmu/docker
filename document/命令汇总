@@ -1,0 +1,82 @@
+# Docker 命令汇总
+## 镜像命令
+- 镜像列表：`$ docker images`
+
+- 查询镜像仓库:`$ docker search httpd`
+
+- 拖取镜像: `$ docker pull httpd`
+
+- 使用镜像创建容器： `$ docker run -t -i ubuntu:15.10 /bin/bash `
+
+- 更新镜像： `$ docker commit -m="has update" -a="xiaofeng" e218edb10161 xiaofeng/centos:6.7`
+
+参数说明：
+```
+    -m:提交的描述信息
+    -a:指定镜像作者
+    e218edb10161：容器ID
+    runoob/ubuntu:v2:指定要创建的目标镜像名
+```
+
+- 使用Dockerfile构建镜像：
+    - 当前路径 `$ docker build -t centos:6.7 .`
+    - 指定路径(/u01是路径): `$ docker build -t centos:6.7 -f /u01/app/dockerFile/df /u01`
+   
+DockerFile例子:   
+```
+FROM    centos:6.7
+MAINTAINER      Fisher "xiaofeng@hand-china.com"
+
+RUN     /bin/echo 'hellow world'
+EXPOSE  22
+EXPOSE  80
+CMD     /bin/bash
+```
+
+参数说明：
+
+```
+-t ：指定要创建的目标镜像名
+
+. ：Dockerfile 文件所在目录，可以指定Dockerfile 的绝对路径
+-f: 指定dockerFile的路径
+/u01: dockerFile所在根路径,用于docker查询上下文
+```
+
+- 设置镜像标签: `$ docker tag 860c279d2fec xiaofeng/centos:dev`
+
+
+## 容器命令
+
+- 从镜像创建一个容器
+
+    - 后台启动（容器在后台运行）：`$ docker run -d --name mynginx -p 80:80 -v /data:/data nginx:latest`
+
+   - 交互式启动(命令行关闭后，容器关闭)：`$ docker run -it --name mynginx -p 80:80 -v /data:/data nginx:latest`
+     
+参数说明：
+
+```
+-i: 以交互模式运行容器，通常与 -t 同时使用；
+-t: 为容器重新分配一个伪输入终端，通常与 -i 同时使用；
+--name="nginx-lb": 为容器指定一个名称；
+-v 将主机的目录/data映射到容器的/data
+
+```
+
+- 挂载主机目录到容器:`$ docker run -it -v /u01/app/vo:/vo --name dbdata centos`
+
+- 创建`据卷容器`:`docker run -it --volumes-from dbdata --name db1 centos /bin/bash`
+
+说明：1.被挂载的数据卷容器可以不启动. 2.容器删除挂载不会被删除
+
+```
+    --volumes-from: 要挂载的容器（带有需要共享数据卷的）
+```
+
+- 容器互相连接
+    - 容器1:`docker run -it --name db_server centos /bin/bash`
+    - 容器2:`docker run -it --name web --link db_server:db centos /bin/bash`
+    说明：可以在web容器中`$ cat /etc/hosts` 看到db_server的ip对应
+    
+   
